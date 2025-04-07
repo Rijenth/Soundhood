@@ -26,14 +26,21 @@ public class GlobalApiResponseWrapper implements ResponseBodyAdvice<Object> {
             org.springframework.http.server.ServerHttpRequest request,
             org.springframework.http.server.ServerHttpResponse response
     ) {
-        // Ne pas re-wrap si c'est déjà une réponse bien formée
-        if (body instanceof Map && ((Map<?, ?>) body).containsKey("data")) {
-            return body;
+        // Ne pas re-wrapper si déjà dans "data"
+        if (body instanceof Map map) {
+            if (map.containsKey("data") || map.containsKey("error") || map.containsKey("errors")) {
+                return body;
+            }
         }
 
-        // Déduire automatiquement le type depuis le nom du contrôleur (ex: UserResponse -> "users")
-        String inferredType = inferTypeFromReturnType(returnType);
+        // Ne pas wrapper si réponse d'erreur (status 4xx/5xx)
+        int status = response.getHeaders().getFirst("status") != null
+                ? Integer.parseInt(response.getHeaders().getFirst("status"))
+                : 200;
 
+        if (status >= 400) return body;
+
+        String inferredType = inferTypeFromReturnType(returnType);
         ApiResponse<Object> wrapped = new ApiResponse<>(inferredType, body);
         return Map.of("data", wrapped);
     }
