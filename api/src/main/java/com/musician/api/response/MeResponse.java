@@ -1,4 +1,3 @@
 package com.musician.api.response;
 
-public class MeResponse {
-}
+public class MeResponse {}

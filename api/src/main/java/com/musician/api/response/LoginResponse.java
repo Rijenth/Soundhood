@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @Builder
 public class LoginResponse {
-    private String jwt;
+  private String jwt;
 }

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @GetMapping("/auth/hello")
-    public String hello() {
-        return "Hello from Spring boot!";
-    }
+  @GetMapping("/auth/hello")
+  public String hello() {
+    return "Hello from Spring boot!";
+  }
 }

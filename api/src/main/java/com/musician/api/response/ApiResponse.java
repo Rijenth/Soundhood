@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ApiResponse<T> {
-    private String type;
+  private String type;
 
-    @JsonProperty("attributes")
-    private T data;
+  @JsonProperty("attributes")
+  private T data;
 }
