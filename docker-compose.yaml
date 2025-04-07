@@ -1,0 +1,61 @@
+
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    command: sh run.sh
+    container_name: api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+      - 35729:35729
+      - 5005:5005
+    volumes:
+      - ./:/app
+      - ./.m2:/root/.m2
+    working_dir: /app
+    networks:
+      - spring-boot-network
+
+  mysql:
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: database
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d/
+    networks:
+      - spring-boot-network
+
+  adminer:
+    image: adminer:4.8.1
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_DRIVER: mysql
+      ADMINER_DEFAULT_DB: database
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DEFAULT_USERNAME: root
+      ADMINER_DEFAULT_PASSWORD: root
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-boot-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+networks:
+  spring-boot-network:
+    driver: bridge
