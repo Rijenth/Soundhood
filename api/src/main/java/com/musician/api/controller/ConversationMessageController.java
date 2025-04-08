@@ -6,12 +6,11 @@ import com.musician.api.repository.MessageRepository;
 import com.musician.api.request.MessageRequest;
 import com.musician.api.response.ConversationMessageResponse;
 import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/conversations/{conversationId}/messages")
 public class ConversationMessageController {
 

@@ -31,7 +31,7 @@ public class Conversation {
             joinColumns={@JoinColumn(name="CONVERSATION_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")}
     )
-    @JsonIgnoreProperties(value = {"roles", "conversations"})
+    @JsonIgnoreProperties(value = {"conversations"})
     private List<User> participants = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
