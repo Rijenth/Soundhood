@@ -1,4 +1,6 @@
+import 'package:SoundHood/pages/register_step_one_page.dart';
 import 'package:flutter/material.dart';
+import '../pages/login_page.dart';
 
 class AuthButtons extends StatelessWidget {
   const AuthButtons({super.key});
@@ -10,7 +12,12 @@ class AuthButtons extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => print("Se connecter"),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.black,
@@ -26,7 +33,12 @@ class AuthButtons extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => print("S’inscrire"),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const RegisterStepOnePage()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
