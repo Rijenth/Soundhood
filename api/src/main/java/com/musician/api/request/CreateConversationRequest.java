@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class CreateConversationRequest {
-    private Long otherUserId;
+  private Long otherUserId;
 }

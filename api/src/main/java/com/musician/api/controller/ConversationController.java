@@ -11,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/conversations")
 public class ConversationController {
 
-    private final ConversationRepository conversationRepository;
+  private final ConversationRepository conversationRepository;
 
-    public ConversationController(ConversationRepository conversationRepository) {
-        this.conversationRepository = conversationRepository;
-    }
+  public ConversationController(ConversationRepository conversationRepository) {
+    this.conversationRepository = conversationRepository;
+  }
 
-    @GetMapping("/{conversationId}")
-    public Conversation getConversation(@PathVariable String conversationId) {
-        return conversationRepository.findById(Long.parseLong(conversationId))
-                .orElseThrow(() -> new RuntimeException("Conversation not found"));
-    }
+  @GetMapping("/{conversationId}")
+  public Conversation getConversation(@PathVariable String conversationId) {
+    return conversationRepository
+        .findById(Long.parseLong(conversationId))
+        .orElseThrow(() -> new RuntimeException("Conversation not found"));
+  }
 }

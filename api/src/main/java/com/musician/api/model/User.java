@@ -46,10 +46,9 @@ public class User {
   @ManyToMany(fetch = FetchType.LAZY)
   @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinTable(
-          name="users_conversations",
-          joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-          inverseJoinColumns={@JoinColumn(name="CONVERSATION_ID", referencedColumnName="ID")}
-  )
+      name = "users_conversations",
+      joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+      inverseJoinColumns = {@JoinColumn(name = "CONVERSATION_ID", referencedColumnName = "ID")})
   @JsonIgnoreProperties(value = {"participants", "messages"})
   private List<Conversation> conversations = new ArrayList<>();
 
