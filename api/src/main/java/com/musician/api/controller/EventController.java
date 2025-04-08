@@ -8,6 +8,7 @@ import com.musician.api.request.CreateEventRequest;
 import com.musician.api.response.EventResponse;
 import com.musician.api.service.EventService;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
@@ -75,11 +76,14 @@ public class EventController {
   }
 
   @GetMapping("/participations/{userId}")
-  public ResponseEntity<List<EventResponse>> getEventsByParticipant(@PathVariable Long userId) {
-    List<Event> events = eventService.getEventsByParticipant(userId);
-    List<EventResponse> response =
-        events.stream().map(EventResponse::new).collect(Collectors.toList());
-    return ResponseEntity.ok(response);
+  public List<EventResponse> getEventsByParticipant(@PathVariable Long userId) {
+    List<EventResponse> response = new ArrayList<>();
+
+    for (Event event : eventService.getEventsByParticipant(userId)) {
+      response.add(new EventResponse(event));
+    }
+
+    return response;
   }
 
   @DeleteMapping("/{id}")
