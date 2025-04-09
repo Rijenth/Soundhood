@@ -1,4 +1,4 @@
-import 'package:SoundHood/pages/register_step_one_page.dart';
+import 'package:SoundHood/screens/register_step_one_screen.dart';
 import 'package:SoundHood/services/authentication_service.dart';
 import 'package:SoundHood/widgets/default_action_button.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +6,8 @@ import '../widgets/logo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:SoundHood/helpers/ToastHelper.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,7 @@ class LoginPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const RegisterStepOnePage()),
+                        MaterialPageRoute(builder: (_) => const LoginScreenRegisterStepOneScreen()),
                       );
                     },
                     child: const Text(

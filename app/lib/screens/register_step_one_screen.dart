@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'register_step_two_page.dart';
+import 'register_step_two_screen.dart';
 import '../widgets/logo_widget.dart';
 import '../widgets/default_action_button.dart';
 
-class RegisterStepOnePage extends StatelessWidget {
-  const RegisterStepOnePage({super.key});
+class LoginScreenRegisterStepOneScreen extends StatelessWidget {
+  const LoginScreenRegisterStepOneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class RegisterStepOnePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => RegisterStepTwoPage(
+                            builder: (_) => RegisterStepTwoScreen(
                               email: emailController.text,
                               firstName: firstNameController.text,
                               lastName: lastNameController.text,

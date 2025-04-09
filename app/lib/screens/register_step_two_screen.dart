@@ -4,13 +4,13 @@ import 'package:SoundHood/widgets/default_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class RegisterStepTwoPage extends StatelessWidget {
+class RegisterStepTwoScreen extends StatelessWidget {
   final String email;
   final String firstName;
   final String lastName;
   final String password;
 
-  const RegisterStepTwoPage({
+  const RegisterStepTwoScreen({
     super.key,
     required this.email,
     required this.firstName,

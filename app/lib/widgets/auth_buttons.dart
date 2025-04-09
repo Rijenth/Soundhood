@@ -1,6 +1,6 @@
-import 'package:SoundHood/pages/register_step_one_page.dart';
+import 'package:SoundHood/screens/register_step_one_screen.dart';
 import 'package:flutter/material.dart';
-import '../pages/login_page.dart';
+import '../screens/login_screen.dart';
 
 class AuthButtons extends StatelessWidget {
   const AuthButtons({super.key});
@@ -15,7 +15,7 @@ class AuthButtons extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const LoginPage()),
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
               );
             },
             style: ElevatedButton.styleFrom(
@@ -36,7 +36,7 @@ class AuthButtons extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const RegisterStepOnePage()),
+                MaterialPageRoute(builder: (_) => const LoginScreenRegisterStepOneScreen()),
               );
             },
             style: ElevatedButton.styleFrom(
