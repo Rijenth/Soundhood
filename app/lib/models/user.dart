@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class User {
   final String email;
   final String firstName;
@@ -19,6 +21,19 @@ class User {
     this.influences,
   });
 
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      email: json['email_address'] ?? '',
+      firstName: json['first_name'] ?? '',
+      lastName: json['last_name'] ?? '',
+      password: json['password'] ?? '',
+      profileName: json['profile_name'],
+      description: json['description'],
+      instruments: json['played_instruments'],
+      influences: json['musical_influences'],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {
       'email_address': email,
@@ -35,5 +50,10 @@ class User {
     if (influences?.isNotEmpty == true) data['musical_influences'] = influences;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'User($firstName $lastName - $email - ${profileName ?? "no profile"})';
   }
 }
