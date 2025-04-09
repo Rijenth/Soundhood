@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:SoundHood/helpers/ToastHelper.dart';
-import 'package:SoundHood/models/user.dart';
-import 'package:SoundHood/services/api_service.dart';
+import 'package:SoundHood/v1/helpers/ToastHelper.dart';
+import 'package:SoundHood/v1/models/user.dart';
+import 'package:SoundHood/v1/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import '../screens/login_screen.dart';
-import '../screens/authenticated/home_screen.dart';
+import 'package:SoundHood/v1/screens/login_screen.dart';
+import 'package:SoundHood/v1/screens/authenticated/home_screen.dart';
 
 class AuthenticationService extends ApiService{
   Future<void> register(BuildContext context, User user) async {

@@ -1,6 +1,6 @@
-import 'package:SoundHood/models/user.dart';
-import 'package:SoundHood/services/authentication_service.dart';
-import 'package:SoundHood/widgets/default_action_button.dart';
+import 'package:SoundHood/v1/models/user.dart';
+import 'package:SoundHood/v1/services/authentication_service.dart';
+import 'package:SoundHood/v1/widgets/default_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

@@ -1,4 +1,4 @@
-import 'package:SoundHood/screens/start_screen.dart';
+import 'package:SoundHood/v1/screens/start_screen.dart';
 import 'package:flutter/material.dart';
 
 class MusiciansApp extends StatelessWidget {

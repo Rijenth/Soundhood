@@ -1,6 +1,6 @@
-import 'package:SoundHood/screens/register_step_one_screen.dart';
+import 'package:SoundHood/v1/screens/login_screen.dart';
+import 'package:SoundHood/v1/screens/register_step_one_screen.dart';
 import 'package:flutter/material.dart';
-import '../screens/login_screen.dart';
 
 class AuthButtons extends StatelessWidget {
   const AuthButtons({super.key});

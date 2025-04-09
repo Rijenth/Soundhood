@@ -1,10 +1,10 @@
-import 'package:SoundHood/screens/register_step_one_screen.dart';
-import 'package:SoundHood/services/authentication_service.dart';
-import 'package:SoundHood/widgets/default_action_button.dart';
+import 'package:SoundHood/v1/screens/register_step_one_screen.dart';
+import 'package:SoundHood/v1/services/authentication_service.dart';
+import 'package:SoundHood/v1/widgets/default_action_button.dart';
+import 'package:SoundHood/v1/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
-import '../widgets/logo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:SoundHood/helpers/ToastHelper.dart';
+import 'package:SoundHood/v1/helpers/ToastHelper.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
