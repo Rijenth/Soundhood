@@ -52,6 +52,7 @@ public class AuthController {
             .emailAddress(registerRequest.getEmailAddress())
             .build();
 
+    user.setIsOnline(false);
     userRepository.save(user);
 
     if (registerRequest.getProfileName() != null) {
