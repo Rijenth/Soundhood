@@ -44,7 +44,9 @@ class UserCard extends StatelessWidget {
               ),
               Text(
                 status,
-                style: TextStyle(color: Colors.grey[500]),
+                style: TextStyle(
+                  color: status == 'En ligne' ? Colors.green : Colors.grey[500],
+                ),
               ),
             ],
           ),

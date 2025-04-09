@@ -80,12 +80,13 @@ class SearchScreen extends StatelessWidget {
 
                   final users = snapshot.data!;
                   return ListView.builder(
-                    itemCount: 5,
+                    itemCount: users.length,
                     itemBuilder: (context, index) {
+                      final user = users[index];
                       return UserCard(
-                        name: 'Nom de profil',
-                        region: 'Région',
-                        status: 'Statut sur l\'app',
+                        name: user.firstName + " " + user.lastName,
+                        region: user.email,
+                        status: user.isOnline == true ? "En ligne" : "Hors ligne",
                       );
                     },
                   );

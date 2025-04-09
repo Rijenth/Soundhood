@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:SoundHood/models/user.dart';
+import 'package:SoundHood/providers/auth_provider.dart';
 import 'package:SoundHood/services/api_service.dart';
 import 'package:SoundHood/helpers/ToastHelper.dart';
 import 'package:SoundHood/providers/auth_provider.dart';
@@ -12,12 +13,15 @@ class UserService {
   final ApiService _apiService = ApiService();
 
   Future<List<User>> getAllUsers(BuildContext context) async {
+
+    final jwtToken = Provider.of<AuthProvider>(context, listen: false).jwtToken;
+
     try {
       print('--- Envoi de la requête GET ---');
       final response = await http.get(
         Uri.parse('${_apiService.baseUrl}/users'),
         headers: {
-          'Authorization': 'Bearer',
+          'Authorization': 'Bearer $jwtToken',
           'Content-Type': 'application/json'
         },
       );
