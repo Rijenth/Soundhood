@@ -26,4 +26,23 @@ class AuthenticationService extends ApiService{
       },
     );
   }
+
+  Future<void> login(BuildContext context, String email, String password) async {
+    final Map<String, dynamic> data = {
+      'email_address': email,
+      'password': password,
+    };
+
+    await handleRequest(
+      context: context,
+      request: () => http.post(
+        Uri.parse('$baseUrl/auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      ),
+      onSuccess: () {
+        ToastHelper.showSuccess(context, "Connecté avec succès");
+      },
+    );
+  }
 }

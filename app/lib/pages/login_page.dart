@@ -1,8 +1,10 @@
 import 'package:SoundHood/pages/register_step_one_page.dart';
+import 'package:SoundHood/services/authentication_service.dart';
 import 'package:SoundHood/widgets/default_action_button.dart';
 import 'package:flutter/material.dart';
 import '../widgets/logo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:SoundHood/helpers/ToastHelper.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -66,8 +68,16 @@ class LoginPage extends StatelessWidget {
                 child:
                 DefaultActionButton(
                     text: "Continuer",
-                  onPressed: () {
-                    print("Continuer : ${emailController.text} / ${passwordController.text}");
+                  onPressed: () async {
+                    final email = emailController.text.trim();
+                    final password = passwordController.text.trim();
+
+                    if (email.isEmpty || password.isEmpty) {
+                      ToastHelper.showError(context, "Veuillez remplir tous les champs obligatoires.");
+                      return;
+                    }
+
+                    await AuthenticationService().login(context, email, password);
                   },
                 )
               ),
