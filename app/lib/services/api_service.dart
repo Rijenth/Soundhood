@@ -11,17 +11,19 @@ class ApiService {
   Future<void> handleRequest({
     required BuildContext context,
     required Future<http.Response> Function() request,
-    required VoidCallback onSuccess,
+    required Function(dynamic response) onSuccess,
   }) async {
     try {
       final response = await request();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        onSuccess();
+        final responseBody = jsonDecode(response.body);
+        onSuccess(responseBody);
         return;
       }
 
       final Map<String, dynamic> errorResponse = jsonDecode(response.body);
+
 
       final message = errorResponse.containsKey("message") && errorResponse["message"].toString().isNotEmpty
           ? errorResponse["message"]

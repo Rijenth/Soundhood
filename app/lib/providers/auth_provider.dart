@@ -5,8 +5,12 @@ class AuthProvider extends ChangeNotifier {
 
   bool get isAuthenticated => _isAuthenticated;
 
-  void login() {
+  String _jwtToken = '';
+  String get jwtToken => _jwtToken;
+
+  void login(String token) {
     _isAuthenticated = true;
+    _jwtToken = token;
     notifyListeners();
   }
 

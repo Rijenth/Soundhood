@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:SoundHood/helpers/ToastHelper.dart';
 import 'package:SoundHood/models/user.dart';
+import 'package:SoundHood/providers/auth_provider.dart';
 import 'package:SoundHood/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../screens/login_screen.dart';
 import '../screens/authenticated/home_screen.dart';
 
@@ -18,7 +20,7 @@ class AuthenticationService extends ApiService{
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(user.toJson()),
       ),
-      onSuccess: () {
+      onSuccess: (response) {
         ToastHelper.showSuccess(context, "Inscription réussie !");
         Navigator.pushReplacement(
           context,
@@ -41,12 +43,23 @@ class AuthenticationService extends ApiService{
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(data),
       ),
-      onSuccess: () {
-        ToastHelper.showSuccess(context, "Connecté avec succès");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
-        );
+      onSuccess: (response) {
+        final jwt = response['jwt'];
+
+        if (jwt is String && jwt.isNotEmpty) {
+          context.read<AuthProvider>().login(jwt);
+
+          ToastHelper.showSuccess(context, "Connexion réussie !");
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+          );
+
+          return;
+        }
+
+        ToastHelper.showError(context, "Jeton manquant ou invalide.");
       },
     );
   }
@@ -61,8 +74,10 @@ class AuthenticationService extends ApiService{
           'Content-Type': 'application/json'
         },
       ),
-      onSuccess: () {
-        ToastHelper.showSuccess(context, "Donnée de l'utilisateur courant récupéré avec succès");
+      onSuccess: (response) {
+        if (response is String) {
+          ToastHelper.showSuccess(context, response);
+        }
       },
     );
   }
