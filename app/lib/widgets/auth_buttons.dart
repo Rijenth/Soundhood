@@ -36,7 +36,9 @@ class AuthButtons extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const LoginScreenRegisterStepOneScreen()),
+                MaterialPageRoute(
+                  builder: (_) => const LoginScreenRegisterStepOneScreen(),
+                ),
               );
             },
             style: ElevatedButton.styleFrom(

@@ -11,15 +11,16 @@ import 'package:provider/provider.dart';
 import '../screens/login_screen.dart';
 import '../screens/authenticated/home_screen.dart';
 
-class AuthenticationService extends ApiService{
+class AuthenticationService extends ApiService {
   Future<void> register(BuildContext context, User user) async {
     await handleRequest(
       context: context,
-      request: () => http.post(
-        Uri.parse('$baseUrl/auth/register'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(user.toJson()),
-      ),
+      request:
+          () => http.post(
+            Uri.parse('$baseUrl/auth/register'),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode(user.toJson()),
+          ),
       onSuccess: (response) {
         ToastHelper.showSuccess(context, "Inscription réussie !");
         Navigator.pushReplacement(
@@ -30,7 +31,11 @@ class AuthenticationService extends ApiService{
     );
   }
 
-  Future<void> login(BuildContext context, String email, String password) async {
+  Future<void> login(
+    BuildContext context,
+    String email,
+    String password,
+  ) async {
     final Map<String, dynamic> data = {
       'email_address': email,
       'password': password,
@@ -38,11 +43,12 @@ class AuthenticationService extends ApiService{
 
     await handleRequest(
       context: context,
-      request: () => http.post(
-        Uri.parse('$baseUrl/auth/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(data),
-      ),
+      request:
+          () => http.post(
+            Uri.parse('$baseUrl/auth/login'),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode(data),
+          ),
       onSuccess: (response) {
         final jwt = response['jwt'];
 
@@ -67,13 +73,14 @@ class AuthenticationService extends ApiService{
   Future<void> me(BuildContext context) async {
     await handleRequest(
       context: context,
-      request: () => http.get(
-        Uri.parse('$baseUrl/auth/me'),
-        headers: {
-          'Authorization': 'Bearer',
-          'Content-Type': 'application/json'
-        },
-      ),
+      request:
+          () => http.get(
+            Uri.parse('$baseUrl/auth/me'),
+            headers: {
+              'Authorization': 'Bearer',
+              'Content-Type': 'application/json',
+            },
+          ),
       onSuccess: (response) {
         if (response is String) {
           ToastHelper.showSuccess(context, response);

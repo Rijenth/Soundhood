@@ -24,10 +24,11 @@ class ApiService {
 
       final Map<String, dynamic> errorResponse = jsonDecode(response.body);
 
-
-      final message = errorResponse.containsKey("message") && errorResponse["message"].toString().isNotEmpty
-          ? errorResponse["message"]
-          : baseErrorMessage;
+      final message =
+          errorResponse.containsKey("message") &&
+                  errorResponse["message"].toString().isNotEmpty
+              ? errorResponse["message"]
+              : baseErrorMessage;
 
       throw Exception(message);
     } catch (e) {

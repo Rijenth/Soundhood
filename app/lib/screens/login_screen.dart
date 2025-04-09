@@ -34,7 +34,10 @@ class LoginScreen extends StatelessWidget {
                   hintStyle: const TextStyle(color: Colors.white54),
                   filled: true,
                   fillColor: Colors.white10,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -53,7 +56,10 @@ class LoginScreen extends StatelessWidget {
                   hintStyle: const TextStyle(color: Colors.white54),
                   filled: true,
                   fillColor: Colors.white10,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -65,21 +71,27 @@ class LoginScreen extends StatelessWidget {
               // Bouton principal
               SizedBox(
                 width: double.infinity,
-                child:
-                DefaultActionButton(
-                    text: "Continuer",
+                child: DefaultActionButton(
+                  text: "Continuer",
                   onPressed: () async {
                     final email = emailController.text.trim();
                     final password = passwordController.text.trim();
 
                     if (email.isEmpty || password.isEmpty) {
-                      ToastHelper.showError(context, "Veuillez remplir tous les champs obligatoires.");
+                      ToastHelper.showError(
+                        context,
+                        "Veuillez remplir tous les champs obligatoires.",
+                      );
                       return;
                     }
 
-                    await AuthenticationService().login(context, email, password);
+                    await AuthenticationService().login(
+                      context,
+                      email,
+                      password,
+                    );
                   },
-                )
+                ),
               ),
               const SizedBox(height: 24),
 
@@ -88,7 +100,10 @@ class LoginScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () => print("Connexion avec Google"),
-                  icon: const Icon(FontAwesomeIcons.google, color: Colors.black),
+                  icon: const Icon(
+                    FontAwesomeIcons.google,
+                    color: Colors.black,
+                  ),
                   label: const Text("Se connecter avec Compte Google"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -133,7 +148,10 @@ class LoginScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const LoginScreenRegisterStepOneScreen()),
+                        MaterialPageRoute(
+                          builder:
+                              (_) => const LoginScreenRegisterStepOneScreen(),
+                        ),
                       );
                     },
                     child: const Text(
@@ -146,7 +164,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

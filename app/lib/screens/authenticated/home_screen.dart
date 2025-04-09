@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                 text: "Afficher la carte",
                 onPressed: () => print("Afficher la carte"),
               ),
-            )
+            ),
           ],
         ),
       ),

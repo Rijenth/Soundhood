@@ -30,7 +30,10 @@ class RegisterStepTwoScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: BackButton(color: Colors.white),
-        title: const Text("Créer votre profil", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Créer votre profil",
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
       ),
@@ -47,7 +50,10 @@ class RegisterStepTwoScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            const Text("Nom de profil", style: TextStyle(color: Colors.white70)),
+            const Text(
+              "Nom de profil",
+              style: TextStyle(color: Colors.white70),
+            ),
             const SizedBox(height: 32),
 
             _buildTextField("Nom de profil", profileNameController),
@@ -76,24 +82,24 @@ class RegisterStepTwoScreen extends StatelessWidget {
                 Expanded(
                   child: DefaultActionButton(
                     text: "Valider",
-                      onPressed: () async {
-                        final user = User(
-                          email: email,
-                          firstName: firstName,
-                          lastName: lastName,
-                          password: password,
-                          profileName: profileNameController.text,
-                          description: descriptionController.text,
-                          instruments: instrumentsController.text,
-                          influences: influencesController.text,
-                        );
+                    onPressed: () async {
+                      final user = User(
+                        email: email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        password: password,
+                        profileName: profileNameController.text,
+                        description: descriptionController.text,
+                        instruments: instrumentsController.text,
+                        influences: influencesController.text,
+                      );
 
-                        await AuthenticationService().register(context, user);
-                      }
+                      await AuthenticationService().register(context, user);
+                    },
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -109,7 +115,10 @@ class RegisterStepTwoScreen extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.white54),
         filled: true,
         fillColor: Colors.white10,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
