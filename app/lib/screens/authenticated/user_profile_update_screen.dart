@@ -1,18 +1,66 @@
+import 'package:SoundHood/helpers/ToastHelper.dart';
+import 'package:SoundHood/services/authentication_service.dart';
+import 'package:SoundHood/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/default_action_button.dart';
 import '../../widgets/main_bottom_navigation.dart';
-import '../authenticated/home_screen.dart';
+import '../../screens/authenticated/home_screen.dart';
 
-class UserProfileUpdateScreen extends StatelessWidget {
+class UserProfileUpdateScreen extends StatefulWidget {
   const UserProfileUpdateScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final profileNameController = TextEditingController();
-    final descriptionController = TextEditingController();
-    final instrumentsController = TextEditingController();
-    final influencesController = TextEditingController();
+  State<UserProfileUpdateScreen> createState() => _UserProfileUpdateScreenState();
+}
 
+class _UserProfileUpdateScreenState extends State<UserProfileUpdateScreen> {
+  final profileNameController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final instrumentsController = TextEditingController();
+  final influencesController = TextEditingController();
+
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserProfile();
+  }
+
+  Future<void> fetchUserProfile() async {
+    try {
+      var fetchProfile = await AuthenticationService().me(context);
+
+      final profile = {
+        "profile_name": fetchProfile?['profile_name'] ?? '',
+        "description": fetchProfile?['description'] ?? '',
+        "played_instruments": fetchProfile?['played_instruments'] ?? '',
+        "musical_influences": fetchProfile?['musical_influences'] ?? '',
+      };
+
+      profileNameController.text = profile['profile_name'];
+      descriptionController.text = profile['description'];
+      instrumentsController.text = profile['played_instruments'];
+      influencesController.text = profile['musical_influences'];
+    } catch (e) {
+      ToastHelper.showError(context, "Une erreur est survenue lors de la récupération de votre profil");
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    profileNameController.dispose();
+    descriptionController.dispose();
+    instrumentsController.dispose();
+    influencesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       bottomNavigationBar: const MainBottomNavigation(),
@@ -23,17 +71,23 @@ class UserProfileUpdateScreen extends StatelessWidget {
         title: const Text("Modifier votre profil", style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
         child: Column(
           children: [
-            // Avatar
+            // Avatar SVG
             Stack(
               alignment: Alignment.center,
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('lib/assets/profile-default.jpg'),
-                  radius: 60,
+                ClipOval(
+                  child: SvgPicture.asset(
+                    'lib/assets/profile-default.svg',
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Positioned(
                   top: 0,
@@ -84,14 +138,15 @@ class UserProfileUpdateScreen extends StatelessWidget {
                 Expanded(
                   child: DefaultActionButton(
                     text: "Valider",
-                    onPressed: () {
+                    onPressed: () async {
                       final updatedProfile = {
                         'profile_name': profileNameController.text,
                         'description': descriptionController.text,
                         'played_instruments': instrumentsController.text,
                         'musical_influences': influencesController.text,
                       };
-                      print("Mise à jour du profil : $updatedProfile");
+
+                      await UserService().updateProfile(context, updatedProfile);
                     },
                   ),
                 ),

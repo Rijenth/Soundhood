@@ -8,31 +8,25 @@ class ApiService {
   final String baseUrl = 'http://localhost:8000';
   String baseErrorMessage = "Une erreur est survenue.";
 
-  Future<void> handleRequest({
+  Future<dynamic> handleRequest({
     required BuildContext context,
     required Future<http.Response> Function() request,
-    required Function(dynamic response) onSuccess,
+    required Function(dynamic body) onSuccess,
   }) async {
     try {
       final response = await request();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseBody = jsonDecode(response.body);
-        onSuccess(responseBody);
-        return;
+        return onSuccess(responseBody);
       }
 
       final Map<String, dynamic> errorResponse = jsonDecode(response.body);
-
-      final message =
-          errorResponse.containsKey("message") &&
-                  errorResponse["message"].toString().isNotEmpty
-              ? errorResponse["message"]
-              : baseErrorMessage;
-
+      final message = errorResponse['message'] ?? baseErrorMessage;
       throw Exception(message);
     } catch (e) {
       ToastHelper.showError(context, "$e");
+      return null;
     }
   }
 }
