@@ -1,5 +1,6 @@
 package com.musician.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,8 +27,9 @@ public class UserProfile {
   @Column(length = 255)
   private String musicalInfluences;
 
-  @ManyToOne
+  @OneToOne
   @JoinColumn(name = "user_id", nullable = false)
+  @JsonIgnore
   private User user;
 
   public UserProfile() {}

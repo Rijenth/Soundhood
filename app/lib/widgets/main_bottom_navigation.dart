@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/navigation_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/authenticated/home_screen.dart';
+import '../screens/authenticated/user_profile_update_screen.dart';
 
 class MainBottomNavigation extends StatelessWidget {
   const MainBottomNavigation({super.key});
@@ -30,7 +31,7 @@ class MainBottomNavigation extends StatelessWidget {
           targetPage = const HomeScreen();
           break;
         case 3:
-          targetPage = const HomeScreen();
+          targetPage = const UserProfileUpdateScreen();
           break;
         default:
           targetPage = const HomeScreen();

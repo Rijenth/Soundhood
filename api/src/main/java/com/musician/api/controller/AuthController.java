@@ -55,10 +55,8 @@ public class AuthController {
     userRepository.save(user);
 
     if (registerRequest.getProfileName() != null) {
-      UserProfile profile = UserProfile.builder()
-              .profileName(registerRequest.getProfileName())
-              .user(user)
-              .build();
+      UserProfile profile =
+          UserProfile.builder().profileName(registerRequest.getProfileName()).user(user).build();
 
       if (registerRequest.getDescription() != null) {
         profile.setDescription(registerRequest.getDescription());
@@ -79,7 +77,7 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
+  public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
     Optional<User> optionalUser = userRepository.findByEmailAddress(loginRequest.getEmailAddress());
 
     if (optionalUser.isEmpty()) {
@@ -91,7 +89,10 @@ public class AuthController {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(user.getUsername(), loginRequest.getPassword()));
 
-    return LoginResponse.builder().jwt(jwtUtil.generateToken(user.getUsername())).build();
+    return LoginResponse.builder()
+        .jwt(jwtUtil.generateToken(user.getUsername()))
+        .userId(user.getId())
+        .build();
   }
 
   @GetMapping("/me")

@@ -1,8 +1,6 @@
 package com.musician.api.model;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,8 +34,8 @@ public class User {
   private String username;
 
   @Builder.Default
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<UserProfile> profiles = new ArrayList<>();
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private UserProfile profile;
 
   public User() {}
 

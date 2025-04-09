@@ -50,9 +50,10 @@ class AuthenticationService extends ApiService {
           ),
       onSuccess: (response) {
         final jwt = response['jwt'];
+        final userID = response['user_id'];
 
-        if (jwt is String && jwt.isNotEmpty) {
-          context.read<AuthProvider>().login(jwt);
+        if (jwt is String && jwt.isNotEmpty && userID is int) {
+          context.read<AuthProvider>().login(jwt, userID);
 
           ToastHelper.showSuccess(context, "Connexion réussie !");
 
@@ -69,21 +70,29 @@ class AuthenticationService extends ApiService {
     );
   }
 
-  Future<void> me(BuildContext context) async {
-    await handleRequest(
+  Future<Map<String, dynamic>?> me(BuildContext context) async {
+    final jwt = context.read<AuthProvider>().jwtToken;
+
+    return await handleRequest(
       context: context,
       request:
           () => http.get(
             Uri.parse('$baseUrl/auth/me'),
             headers: {
-              'Authorization': 'Bearer',
+              'Authorization': 'Bearer $jwt',
               'Content-Type': 'application/json',
             },
           ),
       onSuccess: (response) {
-        if (response is String) {
-          ToastHelper.showSuccess(context, response);
+        if (response is Map<String, dynamic>) {
+          final profile = response['profile'];
+
+          if (profile != null) {
+            return profile;
+          }
         }
+
+        return null;
       },
     );
   }
