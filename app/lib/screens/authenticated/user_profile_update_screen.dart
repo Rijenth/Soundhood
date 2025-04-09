@@ -1,22 +1,10 @@
-import 'package:SoundHood/models/user.dart';
-import 'package:SoundHood/services/authentication_service.dart';
-import 'package:SoundHood/widgets/default_action_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../../widgets/default_action_button.dart';
+import '../../widgets/main_bottom_navigation.dart';
+import '../authenticated/home_screen.dart';
 
-class RegisterStepTwoScreen extends StatelessWidget {
-  final String email;
-  final String firstName;
-  final String lastName;
-  final String password;
-
-  const RegisterStepTwoScreen({
-    super.key,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.password,
-  });
+class UserProfileUpdateScreen extends StatelessWidget {
+  const UserProfileUpdateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,33 +15,42 @@ class RegisterStepTwoScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
+      bottomNavigationBar: const MainBottomNavigation(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: BackButton(color: Colors.white),
-        title: const Text(
-          "Créer votre profil",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
         elevation: 0,
+        leading: BackButton(color: Colors.white),
+        title: const Text("Modifier votre profil", style: TextStyle(color: Colors.white)),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
         child: Column(
           children: [
-            ClipOval(
-              child: SvgPicture.asset(
-                'lib/assets/profile-default.svg',
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
+            // Avatar
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                const CircleAvatar(
+                  backgroundImage: AssetImage('lib/assets/profile-default.jpg'),
+                  radius: 60,
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: const Icon(Icons.edit, size: 18, color: Colors.black),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
-            const Text(
-              "Nom de profil",
-              style: TextStyle(color: Colors.white70),
-            ),
+            const Text("Nom de profil", style: TextStyle(color: Colors.white70)),
             const SizedBox(height: 32),
 
             _buildTextField("Nom de profil", profileNameController),
@@ -69,7 +66,12 @@ class RegisterStepTwoScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                      );
+                    },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
                       side: const BorderSide(color: Colors.white),
@@ -82,24 +84,19 @@ class RegisterStepTwoScreen extends StatelessWidget {
                 Expanded(
                   child: DefaultActionButton(
                     text: "Valider",
-                    onPressed: () async {
-                      final user = User(
-                        email: email,
-                        firstName: firstName,
-                        lastName: lastName,
-                        password: password,
-                        profileName: profileNameController.text,
-                        description: descriptionController.text,
-                        instruments: instrumentsController.text,
-                        influences: influencesController.text,
-                      );
-
-                      await AuthenticationService().register(context, user);
+                    onPressed: () {
+                      final updatedProfile = {
+                        'profile_name': profileNameController.text,
+                        'description': descriptionController.text,
+                        'played_instruments': instrumentsController.text,
+                        'musical_influences': influencesController.text,
+                      };
+                      print("Mise à jour du profil : $updatedProfile");
                     },
                   ),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
@@ -115,10 +112,7 @@ class RegisterStepTwoScreen extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.white54),
         filled: true,
         fillColor: Colors.white10,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

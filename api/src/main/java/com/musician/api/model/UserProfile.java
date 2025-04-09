@@ -1,13 +1,14 @@
 package com.musician.api.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Setter
 @Getter
 @Entity
 @Table(name = "user_profiles")
+@AllArgsConstructor
 public class UserProfile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +29,6 @@ public class UserProfile {
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  public UserProfile() {}
 }

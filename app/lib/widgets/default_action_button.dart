@@ -24,10 +24,7 @@ class DefaultActionButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 16),
-        ),
+        child: Text(text, style: const TextStyle(fontSize: 16)),
       ),
     );
   }

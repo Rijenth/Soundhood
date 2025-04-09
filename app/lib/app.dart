@@ -9,9 +9,7 @@ class MusiciansApp extends StatelessWidget {
     return MaterialApp(
       title: 'Musicians Network',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.black,
-      ),
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
       home: const StartScreen(),
     );
   }

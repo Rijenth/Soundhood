@@ -35,7 +35,11 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
                 _buildEmailField(emailController),
                 const SizedBox(height: 16),
 
-                _buildTextField("Mot de passe", passwordController, obscure: true),
+                _buildTextField(
+                  "Mot de passe",
+                  passwordController,
+                  obscure: true,
+                ),
                 const SizedBox(height: 24),
 
                 SizedBox(
@@ -47,12 +51,13 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => RegisterStepTwoScreen(
-                              email: emailController.text,
-                              firstName: firstNameController.text,
-                              lastName: lastNameController.text,
-                              password: passwordController.text,
-                            ),
+                            builder:
+                                (_) => RegisterStepTwoScreen(
+                                  email: emailController.text,
+                                  firstName: firstNameController.text,
+                                  lastName: lastNameController.text,
+                                  password: passwordController.text,
+                                ),
                           ),
                         );
                       }
@@ -64,7 +69,10 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Déjà un compte ? ", style: TextStyle(color: Colors.white70)),
+                    const Text(
+                      "Déjà un compte ? ",
+                      style: TextStyle(color: Colors.white70),
+                    ),
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
                       child: const Text(
@@ -77,7 +85,7 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -86,7 +94,11 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String hint, TextEditingController controller, {bool obscure = false}) {
+  Widget _buildTextField(
+    String hint,
+    TextEditingController controller, {
+    bool obscure = false,
+  }) {
     return TextFormField(
       controller: controller,
       obscureText: obscure,
@@ -102,7 +114,10 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.white54),
         filled: true,
         fillColor: Colors.white10,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -130,7 +145,10 @@ class LoginScreenRegisterStepOneScreen extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.white54),
         filled: true,
         fillColor: Colors.white10,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
