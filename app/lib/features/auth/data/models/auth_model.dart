@@ -1,26 +1,37 @@
-import '../../domain/entities/user_auth.dart';
+import '../../domain/entities/credentials.dart';
+import '../../domain/entities/session.dart';
 
-/// DTO representing user data returned from auth backend.
+/// DTO representing auth-related user data returned from the backend.
 class AuthModel {
   final String uid;
   final String email;
+  final String token;
 
-  AuthModel({required this.uid, required this.email});
+  AuthModel({
+    required this.uid,
+    required this.email,
+    required this.token,
+  });
 
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(
       uid: json['uid'],
       email: json['email'],
+      token: json['token'],
     );
   }
 
   Map<String, dynamic> toJson() => {
     'uid': uid,
     'email': email,
+    'token': token,
   };
 
-  UserAuth toEntity() => UserAuth(uid: uid, email: email);
+  Credentials toCredentials(String password) =>
+      Credentials(email: email, password: password);
 
-  factory AuthModel.fromEntity(UserAuth user) =>
-      AuthModel(uid: user.uid, email: user.email);
+  Session toSession(String password) => Session(
+    credentials: toCredentials(password),
+    token: token,
+  );
 }

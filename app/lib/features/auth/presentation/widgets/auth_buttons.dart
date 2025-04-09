@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthButtons extends StatelessWidget {
   const AuthButtons({super.key});
@@ -10,7 +11,9 @@ class AuthButtons extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => print("Se connecter"),
+            onPressed: () {
+              context.go('/auth/login');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.black,
@@ -26,7 +29,9 @@ class AuthButtons extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => print("S’inscrire"),
+            onPressed: () {
+              context.go('/auth/register/1');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,

@@ -8,4 +8,11 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.white,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
+
+  static final ThemeData dark = ThemeData(
+    primarySwatch: Colors.deepPurple,
+    useMaterial3: true,
+    scaffoldBackgroundColor: Colors.black,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
 }

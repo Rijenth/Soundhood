@@ -10,7 +10,7 @@ class SoundHoodApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'SoundHood',
-      theme: AppTheme.light, // Custom theming
+      theme: AppTheme.dark, // Custom theming
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
     );

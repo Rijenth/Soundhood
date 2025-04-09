@@ -6,6 +6,7 @@ import 'core/services/api_service.dart';
 import 'features/auth/domain/usecases/login_user.dart';
 import 'features/auth/domain/usecases/register_user.dart';
 import 'features/auth/domain/usecases/logout_user.dart';
+import 'core/services/token_service.dart';
 
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
@@ -39,4 +40,5 @@ Future<void> configureDependencies() async {
   locator.registerLazySingleton(() => LoginUser(locator<AuthRepository>()));
   locator.registerLazySingleton(() => RegisterUser(locator<AuthRepository>()));
   locator.registerLazySingleton(() => LogoutUser(locator<AuthRepository>()));
+  locator.registerLazySingleton(() => TokenService());
 }
