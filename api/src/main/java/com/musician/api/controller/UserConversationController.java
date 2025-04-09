@@ -31,11 +31,13 @@ public class UserConversationController {
     }
 
     @GetMapping
-    public List<Conversation> getUserConversations(@PathVariable Long userId) {
+    public List<ConversationResponse> getUserConversations(@PathVariable Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        return user.getConversations();
+        return user.getConversations().stream()
+                .map(ConversationResponse::new)
+                .collect(Collectors.toList());
     }
 
     @PostMapping
