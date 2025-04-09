@@ -75,13 +75,14 @@ class AuthenticationService extends ApiService {
 
     return await handleRequest(
       context: context,
-      request: () => http.get(
-        Uri.parse('$baseUrl/auth/me'),
-        headers: {
-          'Authorization': 'Bearer $jwt',
-          'Content-Type': 'application/json',
-        },
-      ),
+      request:
+          () => http.get(
+            Uri.parse('$baseUrl/auth/me'),
+            headers: {
+              'Authorization': 'Bearer $jwt',
+              'Content-Type': 'application/json',
+            },
+          ),
       onSuccess: (response) {
         if (response is Map<String, dynamic>) {
           final profile = response['profile'];
