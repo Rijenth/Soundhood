@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class ConversationService {
-  final ApiService _apiService = ApiService();
+class ConversationService extends ApiService{
 
   Future<List<Conversation>> getUserConversations(
       BuildContext context,
@@ -19,7 +18,7 @@ class ConversationService {
 
     try {
       final response = await http.get(
-        Uri.parse('${_apiService.baseUrl}/users/$userId/conversations'),
+        Uri.parse('$baseUrl/users/$userId/conversations'),
         headers: {
           'Authorization': 'Bearer $jwtToken',
           'Content-Type': 'application/json'
@@ -32,7 +31,7 @@ class ConversationService {
             .toList();
       } else {
         final error = jsonDecode(response.body);
-        ToastHelper.showError(context, error['message'] ?? _apiService.baseErrorMessage);
+        ToastHelper.showError(context, error['message'] ?? baseErrorMessage);
         return [];
       }
     } catch (e) {
@@ -50,7 +49,7 @@ class ConversationService {
       final jwtToken = Provider.of<AuthProvider>(context, listen: false).jwtToken;
 
       final response = await http.post(
-        Uri.parse('${_apiService.baseUrl}/users/$userId/conversations'),
+        Uri.parse('$baseUrl/users/$userId/conversations'),
         headers: {
           'Authorization': 'Bearer $jwtToken',
           'Content-Type': 'application/json'
@@ -58,11 +57,11 @@ class ConversationService {
         body: jsonEncode({'id': otherUserId}),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         return Conversation.fromJson(jsonDecode(response.body));
       } else {
         final error = jsonDecode(response.body);
-        ToastHelper.showError(context, error['message'] ?? _apiService.baseErrorMessage);
+        ToastHelper.showError(context, error['message'] ?? baseErrorMessage);
         return null;
       }
     } catch (e) {
@@ -79,7 +78,7 @@ class ConversationService {
       final jwtToken = Provider.of<AuthProvider>(context, listen: false).jwtToken;
 
       final response = await http.get(
-        Uri.parse('${_apiService.baseUrl}/conversations/$conversationId/messages'),
+        Uri.parse('$baseUrl/conversations/$conversationId/messages'),
         headers: {
           'Authorization': 'Bearer $jwtToken',
           'Content-Type': 'application/json'
@@ -92,7 +91,7 @@ class ConversationService {
             .toList();
       } else {
         final error = jsonDecode(response.body);
-        ToastHelper.showError(context, error['message'] ?? _apiService.baseErrorMessage);
+        ToastHelper.showError(context, error['message'] ?? baseErrorMessage);
         return [];
       }
     } catch (e) {
@@ -111,7 +110,7 @@ class ConversationService {
       final jwtToken = Provider.of<AuthProvider>(context, listen: false).jwtToken;
 
       final response = await http.post(
-        Uri.parse('${_apiService.baseUrl}/conversations/$conversationId/messages'),
+        Uri.parse('$baseUrl/conversations/$conversationId/messages'),
         headers: {
           'Authorization': 'Bearer $jwtToken',
           'Content-Type': 'application/json'
@@ -123,7 +122,7 @@ class ConversationService {
         return Message.fromJson(jsonDecode(response.body));
       } else {
         final error = jsonDecode(response.body);
-        ToastHelper.showError(context, error['message'] ?? _apiService.baseErrorMessage);
+        ToastHelper.showError(context, error['message'] ?? baseErrorMessage);
         return null;
       }
     } catch (e) {

@@ -3,6 +3,7 @@ import 'package:SoundHood/services/authentication_service.dart';
 import 'package:SoundHood/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../services/user_service.dart';
 import '../../widgets/default_action_button.dart';
 import '../../widgets/main_bottom_navigation.dart';
 import '../../screens/authenticated/home_screen.dart';

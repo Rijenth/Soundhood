@@ -1,8 +1,12 @@
 import 'package:SoundHood/models/user.dart';
+import 'package:SoundHood/providers/auth_provider.dart';
 import 'package:SoundHood/screens/authenticated/direct_message/conversation_message.dart';
+import 'package:SoundHood/services/conversation_service.dart';
 import 'package:SoundHood/services/user_service.dart';
 import 'package:SoundHood/widgets/user_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../helpers/ToastHelper.dart';
 import '../../widgets/main_bottom_navigation.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -82,17 +86,39 @@ class SearchScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final user = users[index];
                       return UserCard(
-                        name: user.firstName + " " + user.lastName,
-                        region: user.email,
-                        status: user.isOnline == true ? "En ligne" : "Hors ligne",
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => ConversationMessage(user: user),
-                            ),
-                          );
-                        }
+                          name: user.firstName + " " + user.lastName,
+                          region: user.email,
+                          status: user.isOnline == true ? "En ligne" : "Hors ligne",
+                          onTap: () async {
+                            final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                            final currentUserId = authProvider.userID;
+
+                            final conversationService = ConversationService();
+
+                            final conversation = await conversationService.createConversation(
+                              context,
+                              currentUserId.toString(),
+                              user.id.toString(),
+                            );
+
+                            if (conversation != null) {
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Navigation vers la conversation...")),
+                              );
+
+                              await Future.delayed(Duration(milliseconds: 200));
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => ConversationMessage(
+                                    user: user,
+                                  ),
+                                ),
+                              );
+                            }
+                          }
                       );
                     },
                   );
