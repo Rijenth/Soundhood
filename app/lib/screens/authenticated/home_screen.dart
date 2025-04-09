@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../widgets/default_action_button.dart';
 import '../../widgets/main_bottom_navigation.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

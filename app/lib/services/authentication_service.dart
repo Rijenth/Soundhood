@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import '../screens/login_screen.dart';
-import '../screens/authenticated/search_screen.dart';
+import '../screens/authenticated/home_screen.dart';
 
 class AuthenticationService extends ApiService{
   Future<void> register(BuildContext context, User user) async {
@@ -45,7 +45,7 @@ class AuthenticationService extends ApiService{
         ToastHelper.showSuccess(context, "Connecté avec succès");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const SearchScreen()),
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
         );
       },
     );

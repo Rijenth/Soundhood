@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/logo_widget.dart';
 import '../widgets/auth_buttons.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class StartScreen extends StatelessWidget {
+  const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

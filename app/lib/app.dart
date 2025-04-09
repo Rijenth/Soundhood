@@ -1,4 +1,4 @@
-import 'package:SoundHood/screens/home_screen.dart';
+import 'package:SoundHood/screens/start_screen.dart';
 import 'package:flutter/material.dart';
 
 class MusiciansApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class MusiciansApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: const HomeScreen(),
+      home: const StartScreen(),
     );
   }
 }
