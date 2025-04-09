@@ -27,6 +27,8 @@ class _LoginFormViewState extends State<LoginFormView> {
         password: _passwordController.text.trim(),
       ));
     }
+
+    context.go('/home');
   }
 
   @override

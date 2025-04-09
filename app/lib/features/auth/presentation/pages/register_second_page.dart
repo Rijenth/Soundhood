@@ -49,6 +49,8 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
 
     // Appelle le cubit pour stocker le modèle complet
     context.read<RegisterCubit>().submitForm(completedForm);
+
+    context.go('/home');
   }
 
   @override
@@ -81,7 +83,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => context.pop(),
+                    onPressed: () => context.go('/auth/welcome'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
                       side: const BorderSide(color: Colors.white),

@@ -10,10 +10,10 @@ import '../features/home/presentation/pages/home_page.dart';
 
 /// Defines the application's route configuration using GoRouter.
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/auth/welcome_page',
+  initialLocation: '/auth/welcome',
   routes: [
     GoRoute(
-      path: '/auth/welcome_page',
+      path: '/auth/welcome',
       builder: (context, state) => const WelcomePage(),
     ),
     GoRoute(
