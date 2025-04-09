@@ -77,8 +77,6 @@ class RegisterStepTwoPage extends StatelessWidget {
                   child: DefaultActionButton(
                     text: "Valider",
                       onPressed: () async {
-                        final authService = AuthenticationService();
-
                         final user = User(
                           email: email,
                           firstName: firstName,
@@ -90,13 +88,8 @@ class RegisterStepTwoPage extends StatelessWidget {
                           influences: influencesController.text,
                         );
 
-                        try {
-                          final response = await authService.register(user);
-                          print("Inscription réussie : $response");
-                        } catch (e) {
-                          print("Erreur : $e");
-                        }
-                    },
+                        await AuthenticationService().register(context, user);
+                      }
                   ),
                 ),
               ],
