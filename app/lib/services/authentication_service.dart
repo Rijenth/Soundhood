@@ -50,4 +50,20 @@ class AuthenticationService extends ApiService{
       },
     );
   }
+
+  Future<void> me(BuildContext context) async {
+    await handleRequest(
+      context: context,
+      request: () => http.get(
+        Uri.parse('$baseUrl/auth/me'),
+        headers: {
+          'Authorization': 'Bearer',
+          'Content-Type': 'application/json'
+        },
+      ),
+      onSuccess: () {
+        ToastHelper.showSuccess(context, "Donnée de l'utilisateur courant récupéré avec succès");
+      },
+    );
+  }
 }
