@@ -29,8 +29,9 @@ class User {
 
     if (profileName?.isNotEmpty == true) data['profile_name'] = profileName;
     if (description?.isNotEmpty == true) data['description'] = description;
-    if (instruments?.isNotEmpty == true)
+    if (instruments?.isNotEmpty == true) {
       data['played_instruments'] = instruments;
+    }
     if (influences?.isNotEmpty == true) data['musical_influences'] = influences;
 
     return data;

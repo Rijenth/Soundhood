@@ -5,7 +5,6 @@ import 'package:SoundHood/models/user.dart';
 import 'package:SoundHood/providers/auth_provider.dart';
 import 'package:SoundHood/services/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../screens/login_screen.dart';
