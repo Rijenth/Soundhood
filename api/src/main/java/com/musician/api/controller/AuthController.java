@@ -12,6 +12,7 @@ import com.musician.api.response.UserResponse;
 import com.musician.api.service.JwtUtil;
 import jakarta.validation.Valid;
 import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
