@@ -6,7 +6,8 @@ import 'package:SoundHood/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import '../pages/login_page.dart';
+import '../screens/login_screen.dart';
+import '../screens/authenticated/search_screen.dart';
 
 class AuthenticationService extends ApiService{
   Future<void> register(BuildContext context, User user) async {
@@ -21,7 +22,7 @@ class AuthenticationService extends ApiService{
         ToastHelper.showSuccess(context, "Inscription réussie !");
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const LoginPage()),
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
         );
       },
     );
@@ -42,6 +43,26 @@ class AuthenticationService extends ApiService{
       ),
       onSuccess: () {
         ToastHelper.showSuccess(context, "Connecté avec succès");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const SearchScreen()),
+        );
+      },
+    );
+  }
+
+  Future<void> me(BuildContext context) async {
+    await handleRequest(
+      context: context,
+      request: () => http.get(
+        Uri.parse('$baseUrl/auth/me'),
+        headers: {
+          'Authorization': 'Bearer',
+          'Content-Type': 'application/json'
+        },
+      ),
+      onSuccess: () {
+        ToastHelper.showSuccess(context, "Donnée de l'utilisateur courant récupéré avec succès");
       },
     );
   }
