@@ -89,10 +89,27 @@ public class AuthController {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(user.getUsername(), loginRequest.getPassword()));
 
+      user.setIsOnline(true);
+      userRepository.save(user);
+
     return LoginResponse.builder()
         .jwt(jwtUtil.generateToken(user.getUsername()))
         .userId(user.getId())
         .build();
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<?> logout(Authentication authentication) {
+    if (authentication != null && authentication.getName() != null) {
+      Optional<User> optionalUser = userRepository.findByUsername(authentication.getName());
+      if (optionalUser.isPresent()) {
+        User user = optionalUser.get();
+        user.setIsOnline(false);
+        userRepository.save(user);
+      }
+    }
+
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/me")

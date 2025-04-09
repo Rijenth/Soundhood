@@ -36,6 +36,9 @@ public class User {
   @Column(nullable = false, unique = true)
   private String username;
 
+  @Column(nullable = false, columnDefinition = "boolean default false")
+  private Boolean isOnline;
+
   @Builder.Default
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private UserProfile profile;
