@@ -25,23 +25,17 @@ class UserService {
           'Content-Type': 'application/json'
         },
       );
-      print('--- Requête terminée avec status : ${response.statusCode} ---');
-      print('--- Body : ${response.body} ---');
 
       if (response.statusCode == 200) {
         final List<dynamic> usersJson = jsonDecode(response.body);
-        print('--- JSON décodé : $usersJson ---');
         final users = usersJson.map((json) => User.fromJson(json)).toList();
-        print('--- Utilisateurs convertis : $users ---');
         return users;
       } else {
         final error = jsonDecode(response.body);
-        print('--- Erreur API : $error ---');
         ToastHelper.showError(context, error['message'] ?? _apiService.baseErrorMessage);
         return [];
       }
     } catch (e) {
-      print('--- Exception attrapée : $e ---');
       ToastHelper.showError(context, e.toString());
       return [];
     }

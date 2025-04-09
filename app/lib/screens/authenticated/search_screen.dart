@@ -1,4 +1,5 @@
 import 'package:SoundHood/models/user.dart';
+import 'package:SoundHood/screens/authenticated/direct_message/conversation_message.dart';
 import 'package:SoundHood/services/user_service.dart';
 import 'package:SoundHood/widgets/user_card.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,8 @@ class SearchScreen extends StatelessWidget {
   Future<List<User>> _fetchUsers(BuildContext context) async {
     final userService = UserService();
     final users = await userService.getAllUsers(context);
-    print('UTILISATEURS FETCH : $users');
     return users;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +85,14 @@ class SearchScreen extends StatelessWidget {
                         name: user.firstName + " " + user.lastName,
                         region: user.email,
                         status: user.isOnline == true ? "En ligne" : "Hors ligne",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ConversationMessage(user: user),
+                            ),
+                          );
+                        }
                       );
                     },
                   );

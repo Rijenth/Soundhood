@@ -1,4 +1,5 @@
 class User {
+  final int? id;
   final String email;
   final String firstName;
   final String lastName;
@@ -11,6 +12,7 @@ class User {
   final bool? isOnline;
 
   User({
+    this.id,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -25,6 +27,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      id: json['id'],
       email: json['email_address'] ?? '',
       firstName: json['first_name'] ?? '',
       lastName: json['last_name'] ?? '',
