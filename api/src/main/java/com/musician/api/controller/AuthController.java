@@ -2,6 +2,8 @@ package com.musician.api.controller;
 
 import com.musician.api.exception.UnauthorizedException;
 import com.musician.api.model.User;
+import com.musician.api.model.UserProfile;
+import com.musician.api.repository.UserProfileRepository;
 import com.musician.api.repository.UserRepository;
 import com.musician.api.request.LoginRequest;
 import com.musician.api.request.RegisterRequest;
@@ -22,16 +24,19 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
   private final UserRepository userRepository;
+  private final UserProfileRepository userProfileRepository;
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
   private final JwtUtil jwtUtil;
 
   public AuthController(
       UserRepository userRepository,
+      UserProfileRepository userProfileRepository,
       PasswordEncoder passwordEncoder,
       AuthenticationManager authenticationManager,
       JwtUtil jwtUtil) {
     this.userRepository = userRepository;
+    this.userProfileRepository = userProfileRepository;
     this.passwordEncoder = passwordEncoder;
     this.authenticationManager = authenticationManager;
     this.jwtUtil = jwtUtil;
@@ -48,6 +53,27 @@ public class AuthController {
             .build();
 
     userRepository.save(user);
+
+    if (registerRequest.getProfileName() != null) {
+      UserProfile profile = UserProfile.builder()
+              .profileName(registerRequest.getProfileName())
+              .user(user)
+              .build();
+
+      if (registerRequest.getDescription() != null) {
+        profile.setDescription(registerRequest.getDescription());
+      }
+
+      if (registerRequest.getMusicalInfluences() != null) {
+        profile.setMusicalInfluences(registerRequest.getMusicalInfluences());
+      }
+
+      if (registerRequest.getPlayedInstruments() != null) {
+        profile.setMusicalInfluences(registerRequest.getPlayedInstruments());
+      }
+
+      userProfileRepository.save(profile);
+    }
 
     return new UserResponse(user);
   }
