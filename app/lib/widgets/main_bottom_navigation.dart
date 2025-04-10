@@ -26,7 +26,7 @@ class MainBottomNavigation extends StatelessWidget {
           targetPage = const HomeScreen();
           break;
         case 1:
-          targetPage = const SearchScreen();
+          targetPage = SearchScreen();
           break;
         case 2:
           targetPage = const HomeScreen();

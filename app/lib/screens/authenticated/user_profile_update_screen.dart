@@ -71,6 +71,7 @@ class _UserProfileUpdateScreenState extends State<UserProfileUpdateScreen> {
       bottomNavigationBar: const MainBottomNavigation(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         elevation: 0,
         leading: BackButton(color: Colors.white),
         title: const Text(
