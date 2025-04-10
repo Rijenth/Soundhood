@@ -58,11 +58,12 @@ public class ConversationMessageController {
         // Sauvegarder le message
         message = messageRepository.save(message);
 
+        // Retourner la réponse
+        var conversationMessageResponse = new ConversationMessageResponse(message);
+
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            String payload = objectMapper.writeValueAsString(message);
-
-            System.out.println(payload);
+            String payload = objectMapper.writeValueAsString(conversationMessageResponse);
 
             RawWebSocketHandler.broadcastToChannel(
                     message.getConversationId().toString(),
@@ -72,7 +73,6 @@ public class ConversationMessageController {
             throw new RuntimeException("Erreur lors de l'envoi du message via WebSocket : " + e.getMessage(), e);
         }
 
-        // Retourner la réponse
-        return new ConversationMessageResponse(message);
+        return conversationMessageResponse;
     }
 }

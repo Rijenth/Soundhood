@@ -37,7 +37,7 @@ class _ConversationMessageState extends State<ConversationMessage> {
 
     // 👇 Connexion WebSocket
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://c316-2a0d-e487-44f-b395-29ef-996e-7663-dafb.ngrok-free.app/ws/conversations/${widget.conversation.id}'),
+      Uri.parse('ws://localhost:8000/ws/conversations/${widget.conversation.id}'),
     );
 
     _channel.stream.listen((data) {
@@ -45,6 +45,8 @@ class _ConversationMessageState extends State<ConversationMessage> {
 
       final jsonData = json.decode(data);
       final newMessage = Message.fromJson(jsonData);
+
+      if (!mounted) return;
 
       setState(() {
         if (!_messages.contains(newMessage)) {
@@ -55,6 +57,8 @@ class _ConversationMessageState extends State<ConversationMessage> {
   }
 
   Future<void> _fetchMessages() async {
+    if (!mounted) return;
+
     setState(() {
       _isLoading = true;
     });
@@ -66,13 +70,15 @@ class _ConversationMessageState extends State<ConversationMessage> {
           widget.conversation.id.toString()
       );
 
-      print("Messages récupérés: $messages");
+      if (!mounted) return;
 
       setState(() {
         _messages = messages;
         _isLoading = false;
       });
     } catch (e) {
+      if (!mounted) return;
+
       setState(() {
         _isLoading = false;
       });
@@ -96,6 +102,7 @@ class _ConversationMessageState extends State<ConversationMessage> {
           _messageController.text.trim(),
           currentUserId.toString()
       );
+      if (!mounted) return;
 
       if (newMessage != null) {
         setState(() {
@@ -106,10 +113,19 @@ class _ConversationMessageState extends State<ConversationMessage> {
         });
       }
     } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erreur lors de l'envoi du message: ${e.toString()}")),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    _channel.sink.close();
+    _messageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -145,11 +161,12 @@ class _ConversationMessageState extends State<ConversationMessage> {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
-          if (_messages.isEmpty)
-            Column(
+          // 💬 Liste des messages ou profil si vide
+          Expanded(
+            child: _messages.isEmpty
+                ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 50,
@@ -162,78 +179,83 @@ class _ConversationMessageState extends State<ConversationMessage> {
                 const SizedBox(height: 20),
                 Text(
                   fullName,
-                  style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                Text(region, style: const TextStyle(color: Colors.white60, fontSize: 16)),
+                Text(region,
+                    style: const TextStyle(color: Colors.white60, fontSize: 16)),
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                   child: const Text('Voir le profil'),
                 ),
               ],
             )
-          else
-            Expanded(
-              child: ListView.builder(
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  final message = _messages[index];
-                  bool isCurrentUser = message.userId == currentUserId.toString();
+                : ListView.builder(
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                bool isCurrentUser = message.userId == currentUserId.toString();
 
-                  print(message);
-
-                  return Align(
-                    alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: isCurrentUser ? Colors.blueAccent : Colors.grey,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        message.content,
-                        style: const TextStyle(color: Colors.white),
-                      ),
+                return Align(
+                  alignment:
+                  isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
+                  child: Container(
+                    margin:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color:
+                      isCurrentUser ? Colors.blueAccent : Colors.grey[700],
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  );
-                },
-              ),
-            ),
-          // const Spacer(),
-          // Zone de message
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            margin: const EdgeInsets.only(bottom: 24),
-            decoration: BoxDecoration(
-              color: Colors.white12,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.add, color: Colors.white),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      hintText: 'Taper votre message...',
-                      hintStyle: TextStyle(color: Colors.white54),
-                      border: InputBorder.none,
+                    child: Text(
+                      message.content,
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: _sendMessage,
-                  child: const Icon(Icons.send, color: Colors.white),
-                ),
-              ],
+                );
+              },
+            ),
+          ),
+
+          // 📝 Zone de message fixe en bas
+          SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              margin: const EdgeInsets.only(bottom: 12, top: 4),
+              decoration: BoxDecoration(
+                color: Colors.white12,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.add, color: Colors.white),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _messageController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        hintText: 'Taper votre message...',
+                        hintStyle: TextStyle(color: Colors.white54),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _sendMessage,
+                    child: const Icon(Icons.send, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

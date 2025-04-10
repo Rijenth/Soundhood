@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = 'http://c316-2a0d-e487-44f-b395-29ef-996e-7663-dafb.ngrok-free.app';
+  final String baseUrl = 'http://localhost:8000';
   String baseErrorMessage = "Une erreur est survenue.";
 
   Future<dynamic> handleRequest({
