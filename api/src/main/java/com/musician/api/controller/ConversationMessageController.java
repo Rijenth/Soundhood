@@ -1,10 +1,12 @@
 package com.musician.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musician.api.model.Message;
 import com.musician.api.repository.ConversationRepository;
 import com.musician.api.repository.MessageRepository;
 import com.musician.api.request.MessageRequest;
 import com.musician.api.response.ConversationMessageResponse;
+import com.musician.api.service.RawWebSocketHandler;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +57,18 @@ public class ConversationMessageController {
 
         // Sauvegarder le message
         message = messageRepository.save(message);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String payload = objectMapper.writeValueAsString(message);
+
+            RawWebSocketHandler.broadcastToChannel(
+                    message.getConversationId().toString(),
+                    payload
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de l'envoi du message via WebSocket : " + e.getMessage(), e);
+        }
 
         // Retourner la réponse
         return new ConversationMessageResponse(message);
