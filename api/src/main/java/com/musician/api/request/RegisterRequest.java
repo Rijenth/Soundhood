@@ -9,16 +9,16 @@ import lombok.Getter;
 public class RegisterRequest extends AuthenticationRequest {
   @JsonProperty("first_name")
   @NotBlank(message = "First name is required")
-  @Size(min = 4)
+  @Size(min = 2)
   private String firstName;
 
   @JsonProperty("last_name")
   @NotBlank(message = "Last name is required")
-  @Size(min = 4)
+  @Size(min = 2)
   private String lastName;
 
   @JsonProperty("profile_name")
-  @Size(min = 4)
+  @Size(min = 2)
   private String profileName;
 
   @JsonProperty("played_instruments")
