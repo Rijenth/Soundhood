@@ -37,7 +37,7 @@ class _ConversationMessageState extends State<ConversationMessage> {
 
     // 👇 Connexion WebSocket
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://localhost:8000/ws/conversations/${widget.conversation.id}'),
+      Uri.parse('ws://c316-2a0d-e487-44f-b395-29ef-996e-7663-dafb.ngrok-free.app/ws/conversations/${widget.conversation.id}'),
     );
 
     _channel.stream.listen((data) {
@@ -46,9 +46,9 @@ class _ConversationMessageState extends State<ConversationMessage> {
       final jsonData = json.decode(data);
       final newMessage = Message.fromJson(jsonData);
 
-      setState(() {
-        _messages.add(newMessage);
-      });
+      // setState(() {
+      //   _messages.add(newMessage);
+      // });
     });
   }
 
@@ -199,7 +199,7 @@ class _ConversationMessageState extends State<ConversationMessage> {
                 },
               ),
             ),
-          const Spacer(),
+          // const Spacer(),
           // Zone de message
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
