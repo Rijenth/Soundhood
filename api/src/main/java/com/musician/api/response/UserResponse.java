@@ -14,6 +14,7 @@ public class UserResponse {
   private String username;
   private String emailAddress;
   private UserProfile profile;
+  private boolean isOnline;
 
   public UserResponse(User user) {
     this.id = user.getId();
@@ -22,5 +23,6 @@ public class UserResponse {
     this.username = user.getUsername();
     this.emailAddress = user.getEmailAddress();
     this.profile = user.getProfile();
+    this.isOnline = user.getIsOnline();
   }
 }

@@ -12,6 +12,7 @@ import com.musician.api.response.UserResponse;
 import com.musician.api.service.JwtUtil;
 import jakarta.validation.Valid;
 import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,6 +53,7 @@ public class AuthController {
             .emailAddress(registerRequest.getEmailAddress())
             .build();
 
+    user.setIsOnline(false);
     userRepository.save(user);
 
     if (registerRequest.getProfileName() != null) {
@@ -89,10 +91,27 @@ public class AuthController {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(user.getUsername(), loginRequest.getPassword()));
 
+      user.setIsOnline(true);
+      userRepository.save(user);
+
     return LoginResponse.builder()
         .jwt(jwtUtil.generateToken(user.getUsername()))
         .userId(user.getId())
         .build();
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<?> logout(Authentication authentication) {
+    if (authentication != null && authentication.getName() != null) {
+      Optional<User> optionalUser = userRepository.findByUsername(authentication.getName());
+      if (optionalUser.isPresent()) {
+        User user = optionalUser.get();
+        user.setIsOnline(false);
+        userRepository.save(user);
+      }
+    }
+
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/me")
