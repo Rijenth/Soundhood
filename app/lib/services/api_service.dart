@@ -22,10 +22,33 @@ class ApiService {
       }
 
       final Map<String, dynamic> errorResponse = jsonDecode(response.body);
-      final message = errorResponse['message'] ?? baseErrorMessage;
-      throw Exception(message);
+      final dynamic message = errorResponse['message'];
+      final dynamic details = errorResponse['details'];
+
+      throw {
+        if (message != null) 'message': message,
+        if (details != null) 'details': details,
+      };
     } catch (e) {
-      ToastHelper.showError(context, "$e");
+      if (e is String) {
+        ToastHelper.showError(context, e);
+        return null;
+      }
+
+      if (e is Map<String, dynamic>) {
+        if (e.containsKey('details') && e['details'] is Map) {
+          final details = e['details'] as Map<String, dynamic>;
+
+          for (var entry in details.entries) {
+            ToastHelper.showError(context, "${entry.key} : ${entry.value}");
+          }
+
+          return null;
+        }
+      }
+
+      ToastHelper.showError(context, "Une erreur inconnue est survenue.");
+
       return null;
     }
   }

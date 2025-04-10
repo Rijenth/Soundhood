@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class UpdateProfileRequest {
   @JsonProperty("profile_name")
-  @Size(min = 4)
+  @Size(min = 2)
   private String profileName;
 
   @JsonProperty("played_instruments")
