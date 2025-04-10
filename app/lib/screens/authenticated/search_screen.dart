@@ -102,18 +102,12 @@ class SearchScreen extends StatelessWidget {
                             );
 
                             if (conversation != null) {
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Navigation vers la conversation...")),
-                              );
-
-                              await Future.delayed(Duration(milliseconds: 200));
-
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => ConversationMessage(
                                     user: user,
+                                    conversation: conversation,
                                   ),
                                 ),
                               );

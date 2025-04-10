@@ -19,4 +19,9 @@ class Message {
     senderId: json['sender_id'].toString(),
     );
   }
+
+  @override
+  String toString() {
+    return 'Message(id: $id, content: "$content", conversationId: $conversationId, senderId: $senderId)';
+  }
 }

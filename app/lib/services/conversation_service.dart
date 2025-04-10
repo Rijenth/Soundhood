@@ -118,7 +118,7 @@ class ConversationService extends ApiService{
         body: jsonEncode({'message': messageContent, 'userId': senderId}),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return Message.fromJson(jsonDecode(response.body));
       } else {
         final error = jsonDecode(response.body);
