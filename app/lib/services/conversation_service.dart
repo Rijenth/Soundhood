@@ -104,7 +104,7 @@ class ConversationService extends ApiService{
       BuildContext context,
       String conversationId,
       String messageContent,
-      String senderId,
+      String userId,
       ) async {
     try {
       final jwtToken = Provider.of<AuthProvider>(context, listen: false).jwtToken;
@@ -115,7 +115,7 @@ class ConversationService extends ApiService{
           'Authorization': 'Bearer $jwtToken',
           'Content-Type': 'application/json'
         },
-        body: jsonEncode({'message': messageContent, 'userId': senderId}),
+        body: jsonEncode({'message': messageContent, 'userId': userId}),
       );
 
       if (response.statusCode == 200) {

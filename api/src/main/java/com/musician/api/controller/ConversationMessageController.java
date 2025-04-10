@@ -62,6 +62,8 @@ public class ConversationMessageController {
             ObjectMapper objectMapper = new ObjectMapper();
             String payload = objectMapper.writeValueAsString(message);
 
+            System.out.println(payload);
+
             RawWebSocketHandler.broadcastToChannel(
                     message.getConversationId().toString(),
                     payload

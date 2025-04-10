@@ -46,9 +46,11 @@ class _ConversationMessageState extends State<ConversationMessage> {
       final jsonData = json.decode(data);
       final newMessage = Message.fromJson(jsonData);
 
-      // setState(() {
-      //   _messages.add(newMessage);
-      // });
+      setState(() {
+        if (!_messages.contains(newMessage)) {
+          _messages.add(newMessage);
+        }
+      });
     });
   }
 
@@ -97,7 +99,9 @@ class _ConversationMessageState extends State<ConversationMessage> {
 
       if (newMessage != null) {
         setState(() {
-          _messages.add(newMessage);
+          // if (!_messages.contains(newMessage)) {
+          //   _messages.add(newMessage);
+          // }
           _messageController.clear();
         });
       }
@@ -179,7 +183,9 @@ class _ConversationMessageState extends State<ConversationMessage> {
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
                   final message = _messages[index];
-                  bool isCurrentUser = message.senderId == currentUserId.toString();
+                  bool isCurrentUser = message.userId == currentUserId.toString();
+
+                  print(message);
 
                   return Align(
                     alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
