@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:SoundHood/models/conversation.dart';
 import 'package:SoundHood/models/message.dart';
 import 'package:SoundHood/providers/auth_provider.dart';
@@ -5,6 +7,7 @@ import 'package:SoundHood/services/conversation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:SoundHood/models/user.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ConversationMessage extends StatefulWidget {
   final User user;
@@ -24,11 +27,29 @@ class _ConversationMessageState extends State<ConversationMessage> {
   List<Message> _messages = [];
   bool _isLoading = true;
 
+  late WebSocketChannel _channel;
+
   @override
   void initState() {
     super.initState();
     // Charger les messages au démarrage
     _fetchMessages();
+
+    // 👇 Connexion WebSocket
+    _channel = WebSocketChannel.connect(
+      Uri.parse('ws://localhost:8000/ws/conversations/${widget.conversation.id}'),
+    );
+
+    _channel.stream.listen((data) {
+      print("📥 Nouveau message WebSocket : $data");
+
+      final jsonData = json.decode(data);
+      final newMessage = Message.fromJson(jsonData);
+
+      setState(() {
+        _messages.add(newMessage);
+      });
+    });
   }
 
   Future<void> _fetchMessages() async {
