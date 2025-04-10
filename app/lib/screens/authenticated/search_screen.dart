@@ -1,22 +1,24 @@
 import 'package:SoundHood/models/user.dart';
 import 'package:SoundHood/providers/auth_provider.dart';
 import 'package:SoundHood/screens/authenticated/direct_message/conversation_message.dart';
+import 'package:SoundHood/services/authentication_service.dart';
 import 'package:SoundHood/services/conversation_service.dart';
 import 'package:SoundHood/services/user_service.dart';
 import 'package:SoundHood/widgets/user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../helpers/ToastHelper.dart';
 import '../../widgets/main_bottom_navigation.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+  SearchScreen({super.key});
 
   Future<List<User>> _fetchUsers(BuildContext context) async {
     final userService = UserService();
     final users = await userService.getAllUsers(context);
     return users;
   }
+
+  final authentificationService = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,17 @@ class SearchScreen extends StatelessWidget {
       bottomNavigationBar: const MainBottomNavigation(),
       appBar: AppBar(
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: const Text("Rechercher", style: TextStyle(color: Colors.white)),
-        actions: const [
-          Icon(Icons.chat_bubble_outline, color: Colors.white),
-          SizedBox(width: 16),
-          Icon(Icons.notifications_none, color: Colors.white),
-          SizedBox(width: 16),
+        actions: [
+          const Icon(Icons.chat_bubble_outline, color: Colors.white),
+          const SizedBox(width: 16),
+          GestureDetector(
+            onTap: () => authentificationService.logout(context),
+            child: const Icon(Icons.logout, color: Colors.white),
+          ),
+          const SizedBox(width: 16),
         ],
       ),
       body: Padding(

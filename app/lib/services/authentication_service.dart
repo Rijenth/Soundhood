@@ -70,6 +70,26 @@ class AuthenticationService extends ApiService {
     );
   }
 
+  Future<void> logout(
+      BuildContext context
+      ) async {
+    final jwt = context.read<AuthProvider>().jwtToken;
+
+    final response = await http.post(
+        Uri.parse('$baseUrl/auth/logout'),
+        headers: {
+          'Authorization': 'Bearer $jwt',
+          'Content-Type': 'application/json',
+        },
+    );
+    if(response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    }
+  }
+
   Future<Map<String, dynamic>?> me(BuildContext context) async {
     final jwt = context.read<AuthProvider>().jwtToken;
 

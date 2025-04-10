@@ -1,3 +1,4 @@
+import 'package:SoundHood/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -13,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool showMap = false;
+  
+  final authentificationService = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: const MainBottomNavigation(),
       appBar: AppBar(
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: const Text("Rechercher", style: TextStyle(color: Colors.white)),
-        actions: const [
-          Icon(Icons.chat_bubble_outline, color: Colors.white),
-          SizedBox(width: 16),
-          Icon(Icons.notifications_none, color: Colors.white),
-          SizedBox(width: 16),
+        actions: [
+          const Icon(Icons.chat_bubble_outline, color: Colors.white),
+          const SizedBox(width: 16),
+          GestureDetector(
+            onTap: () => authentificationService.logout(context),
+            child: const Icon(Icons.logout, color: Colors.white),
+          ),
+          const SizedBox(width: 16),
         ],
       ),
       body: Stack(
