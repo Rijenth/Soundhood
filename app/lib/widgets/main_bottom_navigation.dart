@@ -4,6 +4,7 @@ import '../providers/navigation_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/authenticated/home_screen.dart';
 import '../screens/authenticated/search_screen.dart';
+import '../screens/authenticated/event_screen.dart';
 import '../screens/authenticated/user_profile_update_screen.dart';
 
 class MainBottomNavigation extends StatelessWidget {
@@ -29,7 +30,7 @@ class MainBottomNavigation extends StatelessWidget {
           targetPage = SearchScreen();
           break;
         case 2:
-          targetPage = const HomeScreen();
+          targetPage = const EventsScreen();
           break;
         case 3:
           targetPage = const UserProfileUpdateScreen();

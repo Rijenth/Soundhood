@@ -15,12 +15,10 @@ class ApiService {
   }) async {
     try {
       final response = await request();
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseBody = jsonDecode(response.body);
         return onSuccess(responseBody);
       }
-
       final Map<String, dynamic> errorResponse = jsonDecode(response.body);
       final dynamic message = errorResponse['message'];
       final dynamic details = errorResponse['details'];
@@ -30,6 +28,7 @@ class ApiService {
         if (details != null) 'details': details,
       };
     } catch (e) {
+      print("hello $e");
       if (e is String) {
         ToastHelper.showError(context, e);
         return null;
