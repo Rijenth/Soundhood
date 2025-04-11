@@ -13,12 +13,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MessageRequest {
 
-    @NotBlank(message = "Message is required")
-    @Size(min = 1, max = 500, message = "Message must be between 1 and 500 characters")
-    private String message;
+  @NotBlank(message = "Message is required")
+  @Size(min = 1, max = 500, message = "Message must be between 1 and 500 characters")
+  private String message;
 
-    @NotNull(message = "Sender ID is required")
-    @JsonProperty("userId")
-    private Long userId;
-
+  @NotNull(message = "Sender ID is required")
+  @JsonProperty("userId")
+  private Long userId;
 }

@@ -69,7 +69,7 @@ public class AuthController {
       }
 
       if (registerRequest.getPlayedInstruments() != null) {
-        profile.setMusicalInfluences(registerRequest.getPlayedInstruments());
+        profile.setPlayedInstruments(registerRequest.getPlayedInstruments());
       }
 
       userProfileRepository.save(profile);
@@ -91,8 +91,8 @@ public class AuthController {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(user.getUsername(), loginRequest.getPassword()));
 
-      user.setIsOnline(true);
-      userRepository.save(user);
+    user.setIsOnline(true);
+    userRepository.save(user);
 
     return LoginResponse.builder()
         .jwt(jwtUtil.generateToken(user.getUsername()))

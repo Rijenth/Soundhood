@@ -2,7 +2,6 @@ package com.musician.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -50,10 +49,9 @@ public class User {
   @ManyToMany(fetch = FetchType.LAZY)
   @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinTable(
-          name="users_conversations",
-          joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-          inverseJoinColumns={@JoinColumn(name="CONVERSATION_ID", referencedColumnName="ID")}
-  )
+      name = "users_conversations",
+      joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+      inverseJoinColumns = {@JoinColumn(name = "CONVERSATION_ID", referencedColumnName = "ID")})
   @JsonIgnoreProperties(value = {"participants", "messages"})
   private List<Conversation> conversations = new ArrayList<>();
 

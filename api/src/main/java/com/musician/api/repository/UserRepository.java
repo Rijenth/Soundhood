@@ -1,7 +1,6 @@
 package com.musician.api.repository;
 
 import com.musician.api.model.User;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
