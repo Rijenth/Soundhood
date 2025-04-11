@@ -6,6 +6,7 @@ import 'package:SoundHood/providers/auth_provider.dart';
 import 'package:SoundHood/services/conversation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:SoundHood/models/user.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -37,7 +38,7 @@ class _ConversationMessageState extends State<ConversationMessage> {
 
     // 👇 Connexion WebSocket
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://localhost:8000/ws/conversations/${widget.conversation.id}'),
+      Uri.parse('ws://a976-2a0d-e487-122f-edd2-eda1-a5c9-d901-252.ngrok-free.app/ws/conversations/${widget.conversation.id}'),
     );
 
     _channel.stream.listen((data) {
@@ -144,12 +145,12 @@ class _ConversationMessageState extends State<ConversationMessage> {
         leading: BackButton(color: Colors.white),
         title: Row(
           children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
+            ClipOval(
+              child: SvgPicture.asset(
+                'lib/assets/profile-default.svg',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 10),
@@ -168,12 +169,12 @@ class _ConversationMessageState extends State<ConversationMessage> {
                 ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
+                ClipOval(
+                  child: SvgPicture.asset(
+                    'lib/assets/profile-default.svg',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(height: 20),

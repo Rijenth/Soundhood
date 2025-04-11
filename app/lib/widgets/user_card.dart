@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class UserCard extends StatelessWidget {
   final String name;
@@ -27,12 +28,12 @@ class UserCard extends StatelessWidget {
             border: Border.all(color: Colors.grey[700]!),
           ),
           child: ListTile(
-            leading: Container(
-              width: 50,
-              height: 50,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
+            leading: ClipOval(
+              child: SvgPicture.asset(
+                'lib/assets/profile-default.svg',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
               ),
             ),
             title: Text(
